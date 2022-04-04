@@ -1,0 +1,21 @@
+name: 'BuildMySource'
+description: 'Compile operations according to my personal habits.'
+
+runs: 
+  using: composite
+  steps:
+    - id: check dependence
+      run: |
+        sudo apt update
+        sudo apt install -y gcc g++
+      shell: bash
+
+    - id: Compile
+      run: |
+        cd src
+        g++ -o test.o source.cpp
+      shell: bash
+
+branding:
+  icon: cpu
+  color: white
