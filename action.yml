@@ -1,7 +1,7 @@
 name: 'BuildMySource'
 description: 'Compile operations according to my personal habits.'
 
-runs: 
+runs:
   using: composite
   steps:
     - id: check dependence
