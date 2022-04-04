@@ -1,19 +1,38 @@
 name: 'BuildMySource'
 description: 'Compile operations according to my personal habits.'
 
+inputs:
+  language:
+    description: C++ / C / Python
+    required: false
+    default: C++
+  source:
+    description: Source file name
+    required: false
+    default: source
+
 runs:
   using: composite
   steps:
     - id: check dependence
       run: |
         sudo apt update
-        sudo apt install -y gcc g++
+        sudo apt install -y gcc g++ python python3 pip
+        sudo pip install pyinstaller
       shell: bash
 
     - id: Compile
       run: |
         cd src
-        g++ -o test.o source.cpp
+        if [[ "${{ inputs.language }}" == "C++" ]];then
+            g++ -o test.o ${{ inputs.source }}.cpp
+        elif [[ "${{ inputs.language }}" == "C" ]];then
+            g++ -o test.o ${{ inputs.source }}.c
+        elif [[ "${{ inputs.language }}" == "Python" ]];then
+            pyinstaller ${{ inputs.source }}.py
+        else
+            echo "Unsupported language."
+        fi
       shell: bash
 
 branding:
