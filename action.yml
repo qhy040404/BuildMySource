@@ -24,11 +24,11 @@ runs:
     - id: Compile
       run: |
         cd src
-        if [[ "${{ inputs.language }}" == "C++" ]];then
+        if [[ "${{ inputs.language }}" == "C++" || "${{ inputs.language }}" == "c++" ]];then
             g++ -o test.o ${{ inputs.source }}.cpp
-        elif [[ "${{ inputs.language }}" == "C" ]];then
+        elif [[ "${{ inputs.language }}" == "C" || "${{ inputs.language }}" == "c" ]];then
             g++ -o test.o ${{ inputs.source }}.c
-        elif [[ "${{ inputs.language }}" == "Python" ]];then
+        elif [[ "${{ inputs.language }}" == "Python" || "${{ inputs.language }}" == "python" ]];then
             pyinstaller ${{ inputs.source }}.py
         else
             echo "Unsupported language."
