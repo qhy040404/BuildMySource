@@ -29,7 +29,7 @@ runs:
         elif [[ "${{ inputs.language }}" == "C" || "${{ inputs.language }}" == "c" ]];then
             g++ -o test.o ${{ inputs.source }}.c
         elif [[ "${{ inputs.language }}" == "Python" || "${{ inputs.language }}" == "python" ]];then
-            pyinstaller ${{ inputs.source }}.py
+            pyinstaller -F ${{ inputs.source }}.py
         else
             echo "Unsupported language."
         fi
