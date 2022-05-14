@@ -28,6 +28,7 @@ runs:
             sudo pip install pyinstaller
         else
             echo "Unsupported language."
+        fi
       shell: bash
 
     - id: Compile
