@@ -6,6 +6,10 @@ inputs:
     description: C++ / C / Python
     required: false
     default: C++
+  path:
+    description: Source file path
+    required: false
+    default: src
   source:
     description: Source file name
     required: false
@@ -17,13 +21,19 @@ runs:
     - id: check-dependence
       run: |
         sudo apt update
-        sudo apt install -y gcc g++ python python3 pip
-        sudo pip install pyinstaller
+        if [[ "${{ inputs.language }}" == "C++" || "${{ inputs.language }}" == "c++" || "${{ inputs.language }}" == "C" || "${{ inputs.language }}" == "c" ]];then
+            sudo apt install -y gcc g++
+        elif [[ "${{ inputs.language }}" == "Python" || "${{ inputs.language }}" == "python" ]];then
+            sudo apt install -y python python3 pip
+            sudo pip install pyinstaller
+        else
+            echo "Unsupported language."
+
       shell: bash
 
     - id: Compile
       run: |
-        cd src
+        cd ${{ inputs.path }}
         if [[ "${{ inputs.language }}" == "C++" || "${{ inputs.language }}" == "c++" ]];then
             g++ -o test.o ${{ inputs.source }}.cpp
         elif [[ "${{ inputs.language }}" == "C" || "${{ inputs.language }}" == "c" ]];then
